@@ -1,63 +1,72 @@
 function bienvenida(){
-    alert("Bienvenido al simulador de plazo fijo!")
-    alert("Antes de iniciar el movimiento le vamos a solicitar unos datos")
+  alert("Hola nuevamente, Bienvenido al simulador de registro de notas del alumnado!!")
+  alert("A continuación se le va a solicitar información de los alumnos y sus respectivas notas.")
 }
 
 bienvenida()
 
-let nombre = prompt("Ingrese su nombre:")
-let sexo = ""
+class Alumno {
+  constructor(nombre, edad, calificacion){
+    this.nombre = nombre
+    this.edad = edad
+    this.calificacion = calificacion
+  }
+}
 
-function saludar(){
-    
-    while (sexo != "F" && sexo != "M" && sexo != "NC") {
-        sexo = prompt("Ingrese su sexo F/M/NC (Ingrese NC en caso de que prefiera no decirlo):").toUpperCase()
+const alumnos = [];
+const notas = []
+let continuar = true
+let nombre
+let edad
+let calificacion
+
+function crearAlumno() {
+  while (continuar) {
+    nombre = prompt("Ingrese el nombre y apellido del alumno:")
+    edad = parseInt(prompt("Ingrese la edad del alumno:"))
+    calificacion = parseFloat(prompt("Ingrese la nota de la última evaluación del alumno:"))
+
+    notas.push(calificacion)
+
+    const nuevoAlumno = new Alumno(nombre, edad, calificacion)
+    alumnos.push(nuevoAlumno)
+
+    let pregunta = prompt("¿Desea ingresar otro alumno? (Si/No)");
+    if (pregunta.toLowerCase() !== "si") {
+          continuar = false;
+    }
+  }
+}
+
+crearAlumno()
+
+function resultadosAlumnos() {
+  for (let i = 0; i < alumnos.length; i++) {
+  alert("Lista de alumnos:" + "\n" + "\n" +
+  
+        "Alumno " + (i + 1) + ":" + "\n" + "\n" +
         
-        if (sexo == "F") {
-          alert("Bienvenida " + nombre + "!!")
-        } else if (sexo == "M") {
-          alert("Bienvenido " + nombre + "!!")
-        } else if (sexo == "NC") {
-          alert("Bienvenidx " + nombre + "!!")
-        } else {
-          alert("ERROR!, por favor ingrese su sexo nuevamente")
-        }
-      }
+        "Nombre: " + alumnos[i].nombre + "\n" +
+        "Edad: " + alumnos[i].edad + "\n" +
+        "Última evaluación: " + alumnos[i].calificacion)
+  }
 }
 
-saludar()
+resultadosAlumnos()
 
-let plazo
-let montoInicial
-
-function informacion() {
-    montoInicial = parseInt(prompt(nombre + " Ingrese el monto deseado a depositar:"))
-
-    alert("¿Está seguro de que desea depositar $" + montoInicial + " en un plazo fijo?")
-
-    plazo = parseInt(prompt("Indique por cuánto tiempo quiere el plazo fijo (En días):"))
-    
-    alert("Genial! Usted va a depositar $" + montoInicial + " en " + plazo + " días")
+function filtrarNotas() {
+  let ordenar = prompt("Desea ordenar las notas de los alumnos de mayor a menor? (Si/No)")
+  if (ordenar.toLowerCase() === "si"){
+    notas.sort((a, b) => b - a)
+    alert(notas.join(", "))
+  }
 }
 
-informacion()
-
-let interes = 97
-let intereses = ((montoInicial * interes) * plazo) / 36500
-
-function calculo() {
-    let montoFinal = montoInicial + intereses
-    let interesGanados = montoFinal - montoInicial
-
-    alert("Tu monto final es de $" + montoFinal.toFixed(2))
-    alert("Generarías una ganancia de interes de $" + interesGanados.toFixed(2))
-}
-
-calculo()
+filtrarNotas()
 
 function despedida() {
-    alert("Espero haber solucionado su inquietud!")
-    alert("Vuelva pronto!!")
+  alert("Espero una vez más que haya disfrutado del simulador")
+  alert("Un facto: Mega-Gardevoir shiny es el mejor pokemon de todos")
 }
 
 despedida()
